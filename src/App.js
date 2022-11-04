@@ -1,9 +1,10 @@
 import React from 'react'
+import CurrencyFormContainer from './containers/CurrencyFormContainer'
 
 export const App = () => {
   return (
     <div>
-      CodeRoad APP
+      <CurrencyFormContainer/>
     </div>
   )
 }
