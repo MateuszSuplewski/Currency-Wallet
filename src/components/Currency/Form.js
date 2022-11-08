@@ -32,7 +32,7 @@ const CurrencyForm = (props) => {
 CurrencyForm.propTypes = {
   state: PropTypes.object,
   submitHandler: PropTypes.func,
-  fields: PropTypes.object,
+  fields: PropTypes.array,
   inputHandler: PropTypes.func
 }
 
