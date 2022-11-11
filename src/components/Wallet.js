@@ -3,7 +3,7 @@ import Cell from './Cell'
 import Button from './Button'
 import PropTypes from 'prop-types'
 
-const Wallet = ({ headerRowContent, currencies, handleCurrencyDelete }) => {
+const Wallet = ({ headerRowContent, bodyContent, handleCurrencyDelete, getCurrencies }) => {
   return (
     <table>
       <caption>Wallet of your currencies</caption>
@@ -19,32 +19,39 @@ const Wallet = ({ headerRowContent, currencies, handleCurrencyDelete }) => {
           ))}
         </tr>
       </thead>
-      <tbody>
-        {currencies.map(
-          ({ type, quantity, purchaseDate, purchasePrice, id }, index) => {
-            return (
-              <tr key={index}>
-                <Cell>{type}</Cell>
-                <Cell>{quantity}</Cell>
-                <Cell>{purchaseDate}</Cell>
-                <Cell>{purchasePrice}</Cell>
-                <Cell>-</Cell> {/* Last 3 cells will be passed by api */}
-                <Cell>-</Cell>
-                <Cell>-</Cell>
-                <Cell>
-                  <Button onClick={() => handleCurrencyDelete(id)}>
-                    REMOVE
-                  </Button>
-                </Cell>
-              </tr>
-            )
-          }
-        )}
+      <tbody> {/* Add error,loading state handling! (getCurrencies) */}
+        {bodyContent &&
+          bodyContent.map(
+            ({ type, quantity, purchaseDate, purchasePrice, id, currentRate, currentValue, currentProfitOrLoss }, index) => {
+              return (
+                <tr key={index}>
+                  <Cell>{type}</Cell>
+                  <Cell>{quantity}</Cell>
+                  <Cell>{purchaseDate}</Cell>
+                  <Cell>{purchasePrice}</Cell>
+                  <Cell>{currentRate}</Cell>
+                  <Cell>{currentValue}</Cell>
+                  <Cell>{currentProfitOrLoss}</Cell>
+                  <Cell>
+                    <Button onClick={() => handleCurrencyDelete(id)}>
+                      REMOVE
+                    </Button>
+                  </Cell>
+                </tr>
+              )
+            }
+          )}
       </tbody>
       <tfoot>
         <tr>
           <Cell colSpan={6}>Summary of your all currency gains/losses</Cell>
-          <Cell>Total Profit/Loss value</Cell>
+          <Cell> {/* Just a random reduce for now */}
+            {bodyContent &&
+              bodyContent.reduce(
+                (prev, curr) => prev + Number(curr.currentValue),
+                0
+              )}
+          </Cell>
         </tr>
       </tfoot>
     </table>
@@ -53,7 +60,8 @@ const Wallet = ({ headerRowContent, currencies, handleCurrencyDelete }) => {
 
 Wallet.propTypes = {
   headerRowContent: PropTypes.array,
-  currencies: PropTypes.array,
-  handleCurrencyDelete: PropTypes.func
+  bodyContent: PropTypes.array,
+  handleCurrencyDelete: PropTypes.func,
+  getCurrencies: PropTypes.object
 }
 export default Wallet

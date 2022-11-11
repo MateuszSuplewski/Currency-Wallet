@@ -1,33 +1,42 @@
-
 import Wallet from '../components/Wallet'
 import { useSelector, useDispatch } from 'react-redux'
 import { createActionRemove } from '../actions/wallet'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { actionCreators, selector } from '../state/getCurrencies'
+import { getCurrentCurrencyRate, getTotalCurrentPrice, getCurrentProfitOrLoss, getUniqueCurrencyTypesFromWallet } from '../helper'
+import { headerRowContent } from '../walletData'
 
 const WalletContainer = () => {
-  const headerRowContent = [
-    'Currency',
-    'Quantity',
-    'Date of purchase',
-    'Purchase price',
-    'Current rate',
-    'Current value',
-    'Profit/Loss'
-  ]
+  const API_URL = 'https://api.apilayer.com/exchangerates_data'
+  const API_KEY = 'YOUR_API_KEY'
 
-  const state = useSelector((state) => state.wallet)
   const storeDispatch = useDispatch()
-  const { currencies } = state
+  const walletState = useSelector((state) => state.wallet)
+  const currenciesState = useSelector(selector)
+  const { currencies } = walletState
+  const { value } = currenciesState
 
-  const handleDelete = (id) => {
-    storeDispatch(createActionRemove(id))
-  }
+  const bodyContent = value &&
+    currencies.map((currency) => ({
+      ...currency,
+      currentRate: getCurrentCurrencyRate(value[currency.type]),
+      currentValue: getTotalCurrentPrice(value[currency.type], currency.quantity),
+      currentProfitOrLoss: getCurrentProfitOrLoss(value[currency.type], currency.purchasePrice, currency.quantity)
+    }))
+
+  const handleDelete = (id) => storeDispatch(createActionRemove(id))
+
+  useEffect(() => {
+    storeDispatch(actionCreators.getCurrencies(API_URL, API_KEY, getUniqueCurrencyTypesFromWallet(currencies).join(',')))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currencies, storeDispatch])
 
   return (
     <Wallet
-      headerRowContent = {headerRowContent}
-      currencies = {currencies}
-      handleCurrencyDelete = {handleDelete}
+      headerRowContent={headerRowContent}
+      bodyContent={bodyContent}
+      getCurrencies={currenciesState}
+      handleCurrencyDelete={handleDelete}
     />
   )
 }
