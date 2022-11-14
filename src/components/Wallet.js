@@ -3,7 +3,7 @@ import Cell from './Cell'
 import Button from './Button'
 import PropTypes from 'prop-types'
 
-const Wallet = ({ headerRowContent, bodyContent, handleCurrencyDelete, getCurrencies }) => {
+const Wallet = ({ headerRowContent, bodyContent, handleCurrencyDelete, footerContent, getCurrencies }) => {
   return (
     <table>
       <caption>Wallet of your currencies</caption>
@@ -45,12 +45,8 @@ const Wallet = ({ headerRowContent, bodyContent, handleCurrencyDelete, getCurren
       <tfoot>
         <tr>
           <Cell colSpan={6}>Summary of your all currency gains/losses</Cell>
-          <Cell> {/* Just a random reduce for now */}
-            {bodyContent &&
-              bodyContent.reduce(
-                (prev, curr) => prev + Number(curr.currentValue),
-                0
-              )}
+          <Cell>
+            {footerContent}
           </Cell>
         </tr>
       </tfoot>
@@ -62,6 +58,7 @@ Wallet.propTypes = {
   headerRowContent: PropTypes.array,
   bodyContent: PropTypes.array,
   handleCurrencyDelete: PropTypes.func,
+  footerContent: PropTypes.number,
   getCurrencies: PropTypes.object
 }
 export default Wallet

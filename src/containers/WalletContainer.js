@@ -8,7 +8,7 @@ import { headerRowContent } from '../walletData'
 
 const WalletContainer = () => {
   const API_URL = 'https://api.apilayer.com/exchangerates_data'
-  const API_KEY = 'YOUR_API_KEY'
+  const API_KEY = 'pDqHzqBd6BbRUcW4Ng8PD52A6pxwoOjX'
 
   const storeDispatch = useDispatch()
   const walletState = useSelector((state) => state.wallet)
@@ -24,6 +24,12 @@ const WalletContainer = () => {
       currentProfitOrLoss: getCurrentProfitOrLoss(value[currency.type], currency.purchasePrice, currency.quantity)
     }))
 
+  const summaryOfCurrencyGainsOrLosses = bodyContent && bodyContent.reduce((prev, { currentProfitOrLoss }) => {
+    const profitOrLossData = currentProfitOrLoss.split(' ')
+    const [value] = profitOrLossData
+    return prev + Number(value)
+  }, 0).toFixed(2)
+
   const handleDelete = (id) => storeDispatch(createActionRemove(id))
 
   useEffect(() => {
@@ -35,6 +41,7 @@ const WalletContainer = () => {
     <Wallet
       headerRowContent={headerRowContent}
       bodyContent={bodyContent}
+      footerContent={summaryOfCurrencyGainsOrLosses}
       getCurrencies={currenciesState}
       handleCurrencyDelete={handleDelete}
     />

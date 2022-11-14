@@ -9,6 +9,12 @@ const validateForm = (fields, state) => {
   return errors
 }
 
+const validateField = (field, state) => {
+  if (field.required && state[field.name].length === 0) return false
+  if (!field.pattern.test(state[field.name]) && state[field.name]) return false
+  return true
+}
+
 const getCurrentCurrencyRate = currencyValue => (1 / Number(currencyValue)).toFixed(4)
 
 const getTotalPurchasePrice = (purchasePrice, quantity) => (Number(quantity) * Number(purchasePrice))
@@ -28,4 +34,4 @@ const getUniqueCurrencyTypesFromWallet = (currencies) => {
     .filter((type, index, array) => array.indexOf(type) === index)
 }
 
-export { validateForm, getCurrentCurrencyRate, getTotalPurchasePrice, getTotalCurrentPrice, getCurrentProfitOrLoss, getUniqueCurrencyTypesFromWallet }
+export { validateForm, getCurrentCurrencyRate, getTotalPurchasePrice, getTotalCurrentPrice, getCurrentProfitOrLoss, getUniqueCurrencyTypesFromWallet, validateField }

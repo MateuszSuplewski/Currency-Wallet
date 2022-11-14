@@ -1,3 +1,5 @@
+import symbols from './supportedSymbols'
+
 export const fields = [
   {
     name: 'type',
@@ -5,14 +7,15 @@ export const fields = [
     placeholder: 'EUR',
     pattern: /[A-Z]{3}/,
     error: 'Invalid type of currency!',
-    type: 'text',
+    type: 'select',
+    options: Array.from(Object.keys(symbols)),
     required: true
   },
   {
     name: 'quantity',
     label: 'Quantity',
     placeholder: '100',
-    pattern: /(?:^|\s)(?=.)((?:0|(?:[1-9](?:\d*|\d{0,2}(?:,\d{3})*)))?(?:\.\d*[1-9])?)(?!\S)/,
+    pattern: /^0$|^[1-9][0-9]*$/,
     error: 'Correct entered quantity',
     type: 'number',
     required: true
@@ -23,7 +26,7 @@ export const fields = [
     placeholder: 'YYYY-MM-DD',
     pattern: /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/,
     error: 'Correctly enter date in format: YYYY-MM-DD',
-    type: 'text',
+    type: 'date',
     required: true
   },
   {

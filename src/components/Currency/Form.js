@@ -11,19 +11,44 @@ const CurrencyForm = (props) => {
       {state.errors.length !== 0
         ? state.errors.map((error, index) => <li key={index}>{error}</li>)
         : null}
-      {fields.map((field) => (
-        <div key={field.name}>
-          <label htmlFor={field.name}>{field.label + ': '}</label>
-          <input
-            id={field.name}
-            type={field.type}
-            name={field.name}
-            placeholder={field.placeholder}
-            value={state[field.name]}
-            onChange={(e) => inputHandler(e)}
-          />
-        </div>
-      ))}
+      {fields.map(({ name, label, placeholder, type, options }) => {
+        if (type === 'select') {
+          return (
+            <div key={name}>
+              <label htmlFor={name}>{label + ': '}</label>
+              <select
+                value={state[name]}
+                name={name}
+                onChange={(e) => inputHandler(e)}
+                id={name}
+              >
+                {
+                  options.map((symbol, index) => (
+                    <option
+                      key={index}
+                      value={symbol}
+                    >{symbol}
+                    </option>
+                  ))
+                }
+              </select>
+            </div>
+          )
+        }
+        return (
+          <div key={name}>
+            <label htmlFor={name}>{label + ': '}</label>
+            <input
+              id={name}
+              type={type}
+              name={name}
+              placeholder={placeholder}
+              value={state[name]}
+              onChange={(e) => inputHandler(e)}
+            />
+          </div>
+        )
+      })}
       <button>SUBMIT</button>
     </form>
   )
