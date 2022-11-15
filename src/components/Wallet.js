@@ -1,56 +1,62 @@
 import React from 'react'
-import Cell from './Cell'
-import Button from './Button'
+import Button from '../styled/Button'
 import PropTypes from 'prop-types'
+import Cell from '../styled/Cell'
+import Row from '../styled/Row'
+import Table from '../styled/Table'
+import Caption from '../styled/Caption'
 
 const Wallet = ({ headerRowContent, bodyContent, handleCurrencyDelete, footerContent, getCurrencies }) => {
   return (
-    <table>
-      <caption>Wallet of your currencies</caption>
+    <Table>
+      <Caption>Wallet of your currencies</Caption>
       <thead>
-        <tr>
+        <Row>
           {headerRowContent.map((cellContent, index) => (
             <Cell
               type={'header'}
+              align={'left'}
               key={index}
             >
               {cellContent}
             </Cell>
           ))}
-        </tr>
+        </Row>
       </thead>
       <tbody> {/* Add error,loading state handling! (getCurrencies) */}
         {bodyContent &&
           bodyContent.map(
             ({ type, quantity, purchaseDate, purchasePrice, id, currentRate, currentValue, currentProfitOrLoss }, index) => {
               return (
-                <tr key={index}>
-                  <Cell>{type}</Cell>
-                  <Cell>{quantity}</Cell>
-                  <Cell>{purchaseDate}</Cell>
-                  <Cell>{purchasePrice}</Cell>
-                  <Cell>{currentRate}</Cell>
-                  <Cell>{currentValue}</Cell>
-                  <Cell>{currentProfitOrLoss}</Cell>
-                  <Cell>
-                    <Button onClick={() => handleCurrencyDelete(id)}>
-                      REMOVE
-                    </Button>
-                  </Cell>
-                </tr>
+                <Row key={index}>
+                  <Cell colName={'Currency'}>{type}</Cell>
+                  <Cell colName={'Quantity'}>{quantity}</Cell>
+                  <Cell colName={'Date of purchase'}>{purchaseDate}</Cell>
+                  <Cell colName={'Purchase price'}>{purchasePrice}</Cell>
+                  <Cell colName={'Current rate'}>{currentRate}</Cell>
+                  <Cell colName={'Current value'}>{currentValue}</Cell>
+                  <Cell colName={'Profit/Loss'}>{currentProfitOrLoss}</Cell>
+                  <Button onClick={() => handleCurrencyDelete(id)}>
+                    REMOVE
+                  </Button>
+                </Row>
               )
             }
           )}
       </tbody>
       <tfoot>
-        <tr>
-          <Cell colSpan={6}>Summary of your all currency gains/losses</Cell>
+        <Row>
+          <Cell
+            colSpan={6}
+            align={'center'}
+          >Summary of your all currency gains/losses
+          </Cell>
           <Cell>
             {footerContent}
           </Cell>
-        </tr>
+        </Row>
       </tfoot>
-    </table>
+    </Table>
   )
 }
 
@@ -58,7 +64,7 @@ Wallet.propTypes = {
   headerRowContent: PropTypes.array,
   bodyContent: PropTypes.array,
   handleCurrencyDelete: PropTypes.func,
-  footerContent: PropTypes.number,
+  footerContent: PropTypes.string,
   getCurrencies: PropTypes.object
 }
 export default Wallet

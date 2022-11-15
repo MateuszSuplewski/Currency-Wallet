@@ -1,44 +1,57 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Input from '../../styled/Input'
+import Label from '../../styled/Label'
+import InputContainer from '../../styled/InputContainer/InputContainer'
+import Select from '../../styled/Select'
+import Button from '../../styled/Button'
+import Form from '../../styled/Form'
+import ErrorList from '../../styled/ErrorList'
+import Error from '../../styled/Error'
 
 const CurrencyForm = (props) => {
   const { state, submitHandler, fields, inputHandler } = props
   return (
-    <form
+    <Form
       onSubmit={submitHandler}
       noValidate
     >
       {state.errors.length !== 0
-        ? state.errors.map((error, index) => <li key={index}>{error}</li>)
+        ? (
+          <ErrorList>
+            {state.errors.map((error, index) => (
+              <Error key={index}>{error}</Error>
+            ))}
+          </ErrorList>
+          )
         : null}
       {fields.map(({ name, label, placeholder, type, options }) => {
         if (type === 'select') {
           return (
-            <div key={name}>
-              <label htmlFor={name}>{label + ': '}</label>
-              <select
+            <InputContainer key={name}>
+              <Label htmlFor={name}>{label + ': '}</Label>
+              <Select
                 value={state[name]}
                 name={name}
                 onChange={(e) => inputHandler(e)}
                 id={name}
               >
-                {
-                  options.map((symbol, index) => (
-                    <option
-                      key={index}
-                      value={symbol}
-                    >{symbol}
-                    </option>
-                  ))
-                }
-              </select>
-            </div>
+                {options.map((symbol, index) => (
+                  <option
+                    key={index}
+                    value={symbol}
+                  >
+                    {symbol}
+                  </option>
+                ))}
+              </Select>
+            </InputContainer>
           )
         }
         return (
-          <div key={name}>
-            <label htmlFor={name}>{label + ': '}</label>
-            <input
+          <InputContainer key={name}>
+            <Label htmlFor={name}>{label + ': '}</Label>
+            <Input
               id={name}
               type={type}
               name={name}
@@ -46,11 +59,16 @@ const CurrencyForm = (props) => {
               value={state[name]}
               onChange={(e) => inputHandler(e)}
             />
-          </div>
+          </InputContainer>
         )
       })}
-      <button>SUBMIT</button>
-    </form>
+      <Button
+        fullWidth
+        type={'submit'}
+      >
+        SUBMIT
+      </Button>
+    </Form>
   )
 }
 
