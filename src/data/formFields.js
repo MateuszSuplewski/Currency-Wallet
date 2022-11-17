@@ -1,4 +1,4 @@
-import symbols from './supportedSymbols'
+import supportedCurrencies from './supportedCurrencies'
 
 export const fields = [
   {
@@ -8,7 +8,7 @@ export const fields = [
     pattern: /[A-Z]{3}/,
     error: 'Invalid type of currency!',
     type: 'select',
-    options: Array.from(Object.keys(symbols)),
+    options: Array.from(Object.keys(supportedCurrencies)),
     required: true
   },
   {

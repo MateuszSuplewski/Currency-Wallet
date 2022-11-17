@@ -1,20 +1,18 @@
-import Wallet from '../components/Wallet'
-import { useSelector, useDispatch } from 'react-redux'
-import { createActionRemove } from '../actions/wallet'
 import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { createActionRemove } from '../state/wallet'
 import { actionCreators, selector } from '../state/getCurrencies'
-import { getCurrentCurrencyRate, getTotalCurrentPrice, getCurrentProfitOrLoss, getUniqueCurrencyTypesFromWallet } from '../helper'
-import { headerRowContent } from '../walletData'
+import Wallet from '../components/Wallet'
+import { getCurrentCurrencyRate, getTotalCurrentPrice, getCurrentProfitOrLoss, getUniqueCurrencyTypesFromWallet, getSummaryOfCurrencyGainsOrLosses } from '../helpers/mainHelper'
+import headerContent from '../data/walletHeader'
 
 const WalletContainer = () => {
-  const API_URL = 'https://api.apilayer.com/exchangerates_data'
-  const API_KEY = 'YOUR_API_KEY'
-
   const storeDispatch = useDispatch()
   const walletState = useSelector((state) => state.wallet)
   const currenciesState = useSelector(selector)
   const { currencies } = walletState
   const { value } = currenciesState
+  const uniqueCurrencies = getUniqueCurrencyTypesFromWallet(currencies).join(',')
 
   const bodyContent = value &&
     currencies.map((currency) => ({
@@ -24,26 +22,22 @@ const WalletContainer = () => {
       currentProfitOrLoss: getCurrentProfitOrLoss(value[currency.type], currency.purchasePrice, currency.quantity)
     }))
 
-  const summaryOfCurrencyGainsOrLosses = bodyContent && bodyContent.reduce((prev, { currentProfitOrLoss }) => {
-    const profitOrLossData = currentProfitOrLoss.split(' ')
-    const [value] = profitOrLossData
-    return prev + Number(value)
-  }, 0).toFixed(2)
+  const summaryOfCurrencyGainsOrLosses = bodyContent && getSummaryOfCurrencyGainsOrLosses(bodyContent)
 
   const handleDelete = (id) => storeDispatch(createActionRemove(id))
 
   useEffect(() => {
-    storeDispatch(actionCreators.getCurrencies(API_URL, API_KEY, getUniqueCurrencyTypesFromWallet(currencies).join(',')))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currencies, storeDispatch])
+    storeDispatch(actionCreators.getCurrencies(uniqueCurrencies))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currencies])
 
   return (
     <Wallet
-      headerRowContent={headerRowContent}
+      headerContent={headerContent}
       bodyContent={bodyContent}
-      footerContent={summaryOfCurrencyGainsOrLosses}
-      getCurrencies={currenciesState}
-      handleCurrencyDelete={handleDelete}
+      footerValue={summaryOfCurrencyGainsOrLosses}
+      currenciesState={currenciesState}
+      handleDelete={handleDelete}
     />
   )
 }

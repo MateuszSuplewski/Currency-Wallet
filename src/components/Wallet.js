@@ -6,13 +6,13 @@ import Row from '../styled/Row'
 import Table from '../styled/Table'
 import Caption from '../styled/Caption'
 
-const Wallet = ({ headerRowContent, bodyContent, handleCurrencyDelete, footerContent, getCurrencies }) => {
+const Wallet = ({ headerContent, bodyContent, handleDelete, footerValue, currenciesState }) => {
   return (
     <Table>
       <Caption>Wallet of your currencies</Caption>
       <thead>
         <Row>
-          {headerRowContent.map((cellContent, index) => (
+          {headerContent.map((cellContent, index) => (
             <Cell
               type={'header'}
               align={'left'}
@@ -23,7 +23,7 @@ const Wallet = ({ headerRowContent, bodyContent, handleCurrencyDelete, footerCon
           ))}
         </Row>
       </thead>
-      <tbody> {/* Add error,loading state handling! (getCurrencies) */}
+      <tbody> {/* Add error,loading state handling! (currenciesState) */}
         {bodyContent &&
           bodyContent.map(
             ({ type, quantity, purchaseDate, purchasePrice, id, currentRate, currentValue, currentProfitOrLoss }, index) => {
@@ -36,7 +36,7 @@ const Wallet = ({ headerRowContent, bodyContent, handleCurrencyDelete, footerCon
                   <Cell colName={'Current rate'}>{currentRate}</Cell>
                   <Cell colName={'Current value'}>{currentValue}</Cell>
                   <Cell colName={'Profit/Loss'}>{currentProfitOrLoss}</Cell>
-                  <Button onClick={() => handleCurrencyDelete(id)}>
+                  <Button onClick={() => handleDelete(id)}>
                     REMOVE
                   </Button>
                 </Row>
@@ -52,7 +52,7 @@ const Wallet = ({ headerRowContent, bodyContent, handleCurrencyDelete, footerCon
           >Summary of your all currency gains/losses
           </Cell>
           <Cell>
-            {footerContent}
+            {footerValue}
           </Cell>
         </Row>
       </tfoot>
@@ -61,10 +61,10 @@ const Wallet = ({ headerRowContent, bodyContent, handleCurrencyDelete, footerCon
 }
 
 Wallet.propTypes = {
-  headerRowContent: PropTypes.array,
+  headerContent: PropTypes.array,
   bodyContent: PropTypes.array,
-  handleCurrencyDelete: PropTypes.func,
-  footerContent: PropTypes.string,
-  getCurrencies: PropTypes.object
+  handleDelete: PropTypes.func,
+  footerValue: PropTypes.string,
+  currenciesState: PropTypes.object
 }
 export default Wallet

@@ -1,10 +1,16 @@
 import thunk from 'redux-thunk'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { composeWithDevTools } from '@redux-devtools/extension'
-import rootReducer from './reducers'
+import walletReducer from './state/wallet'
+import getCurrenciesReducer from './state/getCurrencies'
 
 const LOCAL_STORAGE_KEY = 'CurrencyWallet'
 const preloadedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || undefined
+
+const rootReducer = combineReducers({
+  wallet: walletReducer,
+  getCurrencies: getCurrenciesReducer
+})
 
 const store = createStore(
   rootReducer,

@@ -1,20 +1,3 @@
-const validateForm = (fields, state) => {
-  const errors = []
-
-  fields.forEach(({ required, name, label, error, pattern }) => {
-    if (required && state[name].length === 0) { errors.push(`${label} field requires data`) }
-    if (!pattern.test(state[name]) && state[name]) errors.push(error)
-  })
-
-  return errors
-}
-
-const validateField = (field, state) => {
-  if (field.required && state[field.name].length === 0) return false
-  if (!field.pattern.test(state[field.name]) && state[field.name]) return false
-  return true
-}
-
 const getCurrentCurrencyRate = currencyValue => (1 / Number(currencyValue)).toFixed(4)
 
 const getTotalPurchasePrice = (purchasePrice, quantity) => (Number(quantity) * Number(purchasePrice))
@@ -34,4 +17,15 @@ const getUniqueCurrencyTypesFromWallet = (currencies) => {
     .filter((type, index, array) => array.indexOf(type) === index)
 }
 
-export { validateForm, getCurrentCurrencyRate, getTotalPurchasePrice, getTotalCurrentPrice, getCurrentProfitOrLoss, getUniqueCurrencyTypesFromWallet, validateField }
+const getSummaryOfCurrencyGainsOrLosses = (currenciesData) => {
+  const summaryOfCurrencyGainsOrLosses = currenciesData.reduce((prev, { currentProfitOrLoss }) => {
+    const profitOrLossData = currentProfitOrLoss.split(' ')
+    const [value] = profitOrLossData
+
+    return prev + Number(value)
+  }, 0).toFixed(2)
+
+  return summaryOfCurrencyGainsOrLosses
+}
+
+export { getCurrentCurrencyRate, getTotalPurchasePrice, getTotalCurrentPrice, getCurrentProfitOrLoss, getUniqueCurrencyTypesFromWallet, getSummaryOfCurrencyGainsOrLosses }

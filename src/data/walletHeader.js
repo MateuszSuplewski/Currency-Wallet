@@ -8,4 +8,4 @@ const headerRowContent = [
   'Profit/Loss'
 ]
 
-export { headerRowContent }
+export default headerRowContent

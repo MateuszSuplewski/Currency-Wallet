@@ -1,10 +1,25 @@
-import { ADD, REMOVE } from '../types/wallet'
+export const ADD = 'currencies/ADD'
+export const REMOVE = 'currencies/REMOVE'
 
-const initialState = {
+export const createActionAdd = (currency) => {
+  return {
+    type: ADD,
+    payload: currency
+  }
+}
+
+export const createActionRemove = (currencyId) => {
+  return {
+    type: REMOVE,
+    payload: currencyId
+  }
+}
+
+export const initialState = {
   currencies: []
 }
 
-const reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD:
       return {

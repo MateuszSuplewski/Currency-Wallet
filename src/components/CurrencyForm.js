@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Input from '../../styled/Input'
-import Label from '../../styled/Label'
-import InputContainer from '../../styled/InputContainer/InputContainer'
-import Select from '../../styled/Select'
-import Button from '../../styled/Button'
-import Form from '../../styled/Form'
-import ErrorList from '../../styled/ErrorList'
-import Error from '../../styled/Error'
+import Input from '../styled/Input'
+import Label from '../styled/Label'
+import InputContainer from '../styled/InputContainer/InputContainer'
+import Select from '../styled/Select'
+import Button from '../styled/Button'
+import Form from '../styled/Form'
+import ErrorList from '../styled/ErrorList'
+import Error from '../styled/Error'
 
 const CurrencyForm = (props) => {
   const { state, submitHandler, fields, inputHandler } = props

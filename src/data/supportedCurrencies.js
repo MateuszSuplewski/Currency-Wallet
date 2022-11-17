@@ -1,4 +1,4 @@
-const symbols = {
+const supportedCurrencies = {
   AED: 'United Arab Emirates Dirham',
   AFN: 'Afghan Afghani',
   ALL: 'Albanian Lek',
@@ -170,4 +170,4 @@ const symbols = {
   ZWL: 'Zimbabwean Dollar'
 }
 
-export default symbols
+export default supportedCurrencies
