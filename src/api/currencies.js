@@ -28,6 +28,8 @@ class CurrenciesAPI {
 
     const response = await fetch(fullUrl, options)
     const data = await response.json()
+    if (data.message) throw new Error(data.message)
+
     return data.rates
   }
 }

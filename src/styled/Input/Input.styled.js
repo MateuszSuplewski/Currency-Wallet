@@ -5,7 +5,7 @@ const DefaultSInput = styled.input`
   padding: 0.5rem;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.3);
-  color: rgba(0, 0, 0, 0.7);
+  color: ${({ theme }) => theme.formInputColor};
   min-width: 120px;
   flex-basis: 50%;
 `

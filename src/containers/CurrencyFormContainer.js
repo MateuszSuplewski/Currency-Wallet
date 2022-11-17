@@ -44,11 +44,8 @@ const CurrencyFormContainer = () => {
         try {
           const purchaseAPIPrice = await currAPI.getCurrencyFromDate(state.type, state.purchaseDate)
           const currentPrice = await getCurrentCurrencyRate(purchaseAPIPrice)
-          console.log(currentPrice) // Add popup to inform
           dispatch({ type: 'updateFieldValue', payload: { key: 'purchasePrice', value: currentPrice } })
-        } catch (error) {
-          console.log(error) // add snackbar
-        }
+        } catch (error) {}
       })()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

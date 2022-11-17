@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 const DefaultSButton = styled.button`
   padding: 0.625rem;
-  background-color: #1b1b1b;
-  color: #dddddd;
+  background-color: ${({ theme, bgColor }) => bgColor || theme.buttonColor};
+  color: ${({ theme, color }) => color || theme.secondaryCellColor};
   font-weight: bold;
   border: none;
   letter-spacing: 1px;
@@ -16,7 +16,7 @@ const DefaultSButton = styled.button`
 
   @media screen and (min-width: 826px) {
     &:hover {
-      background-color: #ba2c2c;
+      background-color: ${({ theme, hoverColor }) => hoverColor || theme.actionColor};
     }
   }
 `

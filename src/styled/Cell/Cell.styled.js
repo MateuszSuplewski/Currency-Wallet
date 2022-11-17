@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const DefaultSHeaderCell = styled.th`
   padding: 1rem 1rem 1rem 0.7rem;
-  color: #e5e5e5;
+  color: ${({ theme }) => theme.secondaryCellColor};
   text-align: ${({ align }) => align};
 
   @media screen and (max-width: 825px) {
@@ -11,13 +11,13 @@ const DefaultSHeaderCell = styled.th`
 `
 
 const DefaultSDataCell = styled.td`
-  color: white;
+  color: ${({ theme }) => theme.primaryCellColor};
   text-align: ${({ align }) => align};
 
   @media screen and (min-width: 826px) {
     padding: 0.2rem 0.7rem;
     &:hover {
-      background-color: rgba(68, 90, 88, 0.5);
+      background-color: ${({ theme }) => theme.cellHoverColor};
     }
   }
 

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const DefaultSError = styled.li`
   padding: 0.3rem 0.5rem;
-  color: red;
+  color: ${({ theme }) => theme.errorColor};
   font-size: 0.85rem;
 `
 

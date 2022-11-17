@@ -1,3 +1,3 @@
-import Input from './Input'
+import InputContainer from './InputContainer'
 
-export default Input
+export default InputContainer

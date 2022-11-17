@@ -5,10 +5,14 @@ import './index.css'
 import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
 import store from './store'
+import { ThemeProvider } from 'styled-components'
+import themeSettings from './theme'
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={themeSettings}>
+      <App />
+    </ThemeProvider>
   </Provider>,
   document.getElementById('root')
 )

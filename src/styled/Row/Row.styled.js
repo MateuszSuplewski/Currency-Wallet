@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const DefaultSRow = styled.tr`
   @media screen and (min-width: 826px) {
     &:hover {
-      background-color: rgba(211, 238, 170, 0.3);
+      background-color: ${({ theme }) => theme.rowHoverColor};
     }
   }
 

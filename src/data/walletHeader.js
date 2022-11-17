@@ -5,7 +5,7 @@ const headerRowContent = [
   'Purchase price',
   'Current rate',
   'Current value',
-  'Profit/Loss'
+  'Profit / Loss'
 ]
 
 export default headerRowContent
