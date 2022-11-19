@@ -11,7 +11,7 @@ class CurrenciesAPI {
 
   getCurrencyFromDate = async (currencyType, date) => {
     const currencyFromDate = await this._fetch(`/${date}?symbols=${currencyType}&base=${this.exchangeTo}`)
-    return await currencyFromDate[currencyType]
+    return currencyFromDate[currencyType]
   }
 
   async _fetch (additionalPath = '') {

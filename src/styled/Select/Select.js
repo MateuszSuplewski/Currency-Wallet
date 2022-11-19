@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import SSelect from './Select.styled'
 
-const Select = ({ style, value, name, onChange, children, ...otherProps }) => {
+const Select = ({ style, value, name, onChange, children, options, ...otherProps }) => {
   return (
     <SSelect
       style={style}
@@ -11,7 +11,14 @@ const Select = ({ style, value, name, onChange, children, ...otherProps }) => {
       onChange={onChange}
       {...otherProps}
     >
-      {children}
+      {options.map((symbol, index) => (
+        <option
+          key={index}
+          value={symbol}
+        >
+          {symbol}
+        </option>
+      ))}
     </SSelect>
   )
 }
@@ -21,7 +28,8 @@ Select.propTypes = {
   value: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func,
-  children: PropTypes.node
+  children: PropTypes.node,
+  options: PropTypes.array
 }
 
 export default Select

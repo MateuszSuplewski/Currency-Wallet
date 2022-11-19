@@ -1,11 +1,11 @@
 import React from 'react'
-import Button from '../styled/Button'
 import PropTypes from 'prop-types'
 import Cell from '../styled/Cell'
 import Row from '../styled/Row'
 import Table from '../styled/Table'
 import Caption from '../styled/Caption'
 import TableInformer from '../styled/TableInformer'
+import BodyRow from './WalletBodyRow'
 
 const Wallet = ({ headerContent, bodyContent, handleDelete, footerValue, currenciesState }) => {
   const { loading, error } = currenciesState
@@ -33,21 +33,15 @@ const Wallet = ({ headerContent, bodyContent, handleDelete, footerValue, currenc
             ? <TableInformer color={'red'}>{'Oops, something went wrong! ' + error}</TableInformer>
             : (
                 bodyContent &&
-                bodyContent.map(({ type, quantity, purchaseDate, purchasePrice, id, currentRate, currentValue, currentProfitOrLoss }, index) => {
-                  return (
-                    <Row key={index}>
-                      <Cell colName={'Currency'}>{type}</Cell>
-                      <Cell colName={'Quantity'}>{quantity}</Cell>
-                      <Cell colName={'Date of purchase'}>{purchaseDate}</Cell>
-                      <Cell colName={'Purchase price'}>{purchasePrice}</Cell>
-                      <Cell colName={'Current rate'}>{currentRate}</Cell>
-                      <Cell colName={'Current value'}>{currentValue}</Cell>
-                      <Cell colName={'Profit / Loss'}>{currentProfitOrLoss}</Cell>
-                      <Cell><Button onClick={() => handleDelete(id)}>REMOVE</Button>
-                      </Cell>
-                    </Row>
-                  )
-                })
+                bodyContent.map((rowContent, index) => (
+                  <BodyRow
+                    key={index}
+                    rowCellsContent={Object.values(rowContent)}
+                    colNames={headerContent}
+                    handleDelete={handleDelete}
+                  />
+                )
+                )
               )}
       </tbody>
       <tfoot>

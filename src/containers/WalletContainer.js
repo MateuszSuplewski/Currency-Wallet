@@ -15,11 +15,15 @@ const WalletContainer = () => {
   const uniqueCurrencies = getUniqueCurrencyTypesFromWallet(currencies).join(',')
 
   const bodyContent = value &&
-    currencies.map((currency) => ({
-      ...currency,
-      currentRate: getCurrentCurrencyRate(value[currency.type]),
-      currentValue: getTotalCurrentPrice(value[currency.type], currency.quantity),
-      currentProfitOrLoss: getCurrentProfitOrLoss(value[currency.type], currency.purchasePrice, currency.quantity)
+    currencies.map(({ type, quantity, purchaseDate, purchasePrice, id }) => ({
+      type,
+      quantity,
+      purchaseDate,
+      purchasePrice,
+      currentRate: getCurrentCurrencyRate(value[type]),
+      currentValue: getTotalCurrentPrice(value[type], quantity),
+      currentProfitOrLoss: getCurrentProfitOrLoss(value[type], purchasePrice, quantity),
+      id
     }))
 
   const summaryOfCurrencyGainsOrLosses = bodyContent && getSummaryOfCurrencyGainsOrLosses(bodyContent)

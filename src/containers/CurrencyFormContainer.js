@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 import { createActionAdd } from '../state/wallet'
@@ -13,22 +13,23 @@ import fields from '../data/formFields'
 const CurrencyFormContainer = () => {
   const storeDispatch = useDispatch()
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [errors, setErrors] = useState([])
   const currAPI = new CurrenciesAPI(API_URL, API_KEY)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const errors = validateForm(fields, state)
+    const validationErrors = validateForm(fields, state)
 
-    if (errors.length !== 0) {
-      dispatch({ type: 'setErrors', payload: errors })
+    if (validationErrors.length !== 0) {
+      setErrors(validationErrors)
       return
     }
 
     const currency = { ...state, id: uuidv4() }
-    delete currency.errors
 
     storeDispatch(createActionAdd(currency))
     dispatch({ type: 'clearFields' })
+    setErrors(validationErrors)
   }
 
   const handleInputChange = ({ target }) => {
@@ -54,6 +55,7 @@ const CurrencyFormContainer = () => {
   return (
     <CurrencyForm
       state={state}
+      errors={errors}
       submitHandler={handleSubmit}
       fields={fields}
       inputHandler={handleInputChange}

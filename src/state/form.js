@@ -2,8 +2,7 @@ export const initialState = {
   type: 'EUR',
   quantity: '',
   purchaseDate: '',
-  purchasePrice: '',
-  errors: []
+  purchasePrice: ''
 }
 
 export const reducer = (state, action) => {
@@ -12,11 +11,6 @@ export const reducer = (state, action) => {
       return {
         ...state,
         [action.payload.key]: action.payload.value
-      }
-    case 'setErrors':
-      return {
-        ...state,
-        errors: action.payload
       }
     case 'clearFields':
       return {
