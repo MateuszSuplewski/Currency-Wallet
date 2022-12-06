@@ -4,8 +4,6 @@
 
 # Currency Wallet
 
-See the live version of [Currency Wallet](https://devmentor.pl).
-
 Our app allows you to store data about currencies you have recently bought, moreover, it has many automated processes, such as:
 - Profit/Loss calculation,
 - Currency exchange rate update,
@@ -104,7 +102,7 @@ localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state))
 ```
  &nbsp;
 
-- ### Setting up application state with Redux, Redux Thunk
+- ### Setting up application state with Redux & Redux Thunk
 
  Redux stores state of the application and allows you to easily transfer data between components in app without need to use hooks such as: `useState`, `useReducer` or `useContext`.
 
